@@ -1,0 +1,27 @@
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+                
+    App\Service\Parser\HttpClient:
+        arguments: ['@logger', '@http_client', '%env(PARSER_SERVER_NOTIFY_URL)%']
+
+    App\Event\Listener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    App\Event\Listener\RequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }

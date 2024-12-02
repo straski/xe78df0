@@ -1,0 +1,20 @@
+<?php
+namespace Deployer;
+
+require 'recipe/symfony.php';
+
+set('repository', '');
+
+add('shared_files', ['.env']);
+add('shared_dirs', []);
+add('writable_dirs', []);
+
+host('')
+    ->set('remote_user', 'ubuntu')
+    ->set('deploy_path', '')
+    ->set('composer_options', '--verbose --no-dev --prefer-dist --no-interaction --optimize-autoloader')
+    ->set('port', 22);
+
+after('deploy:failed', 'deploy:unlock');
+after('deploy', 'database:migrate');
+after('deploy', 'deploy:done');
