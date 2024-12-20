@@ -4,8 +4,7 @@
 !/config/fixtures/*.json.dist
 !/config/fixtures/defaults.json
 deploy.php
-/public
-!/public/index.php
+/public/*.pdf
 ###< project ###
 
 ###> symfony/framework-bundle ###
